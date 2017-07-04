@@ -7,11 +7,11 @@ class _SafeText:
 
 
 def _text_node(doc, content):
-    return doc.createTextNode(content)
+    return doc.createTextNode(content), []
 
 
 def _safe_text(_, content):
-    return minidom.parseString(content.text).documentElement
+    return minidom.parseString(content.text).documentElement, []
 
 
 def _set_attributes(element, attributes):
@@ -53,9 +53,7 @@ def _element(doc, content):
     else:
         children = rest[0:]
 
-    for child in children:
-        el.appendChild(_node(child))
-    return el
+    return el, children
 
 
 _node_funs = [
@@ -65,12 +63,30 @@ _node_funs = [
 ]
 
 
+class _NodeContainer:
+    def appendChild(self, child):
+        self.root = child
+
+
+def _node_iter(doc, children):
+    if not children:
+        return
+    new_children = []
+    for parent, content in children:
+        for type_, fun in _node_funs:
+            if isinstance(content, type_):
+                node, cs = fun(doc, content)
+                parent.appendChild(node)
+                new_children.extend([(node, child) for child in cs])
+    _node_iter(doc, new_children)
+
+
 def _node(content):
     impl = minidom.getDOMImplementation()
     doc = impl.createDocument(None, 'html', None)
-    for type_, fun in _node_funs:
-        if isinstance(content, type_):
-            return fun(doc, content)
+    container = _NodeContainer()
+    _node_iter(doc, [(container, content)])
+    return container.root
 
 
 def html(content):
