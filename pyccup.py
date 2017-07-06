@@ -68,24 +68,20 @@ class _NodeContainer:
         self.root = child
 
 
-def _node_iter(doc, children):
-    if not children:
-        return
-    new_children = []
-    for parent, content in children:
-        for type_, fun in _node_funs:
-            if isinstance(content, type_):
-                node, cs = fun(doc, content)
-                parent.appendChild(node)
-                new_children.extend([(node, child) for child in cs])
-    _node_iter(doc, new_children)
-
-
 def _node(content):
     impl = minidom.getDOMImplementation()
     doc = impl.createDocument(None, 'html', None)
     container = _NodeContainer()
-    _node_iter(doc, [(container, content)])
+    children = [(container, content)]
+    while children:
+        new_children = []
+        for parent, content in children:
+            for type_, fun in _node_funs:
+                if isinstance(content, type_):
+                    node, cs = fun(doc, content)
+                    parent.appendChild(node)
+                    new_children.extend([(node, child) for child in cs])
+        children = new_children
     return container.root
 
 
