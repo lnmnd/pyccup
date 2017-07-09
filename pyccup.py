@@ -76,11 +76,12 @@ def _node(content):
     while children:
         new_children = []
         for parent, content in children:
-            for type_, fun in _node_funs:
+            for type_, fun in _node_funs:  # pragma: no branch
                 if isinstance(content, type_):
-                    node, cs = fun(doc, content)
-                    parent.appendChild(node)
-                    new_children.extend([(node, child) for child in cs])
+                    break
+            node, cs = fun(doc, content)
+            parent.appendChild(node)
+            new_children.extend([(node, child) for child in cs])
         children = new_children
     return container.root
 
