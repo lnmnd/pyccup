@@ -1,6 +1,25 @@
 import xml.dom.minidom as minidom
 
 
+_void_elements = set([
+    'area',
+    'base',
+    'br',
+    'col',
+    'embed',
+    'hr',
+    'img',
+    'input',
+    'keygen',
+    'link',
+    'meta',
+    'param',
+    'source',
+    'track',
+    'wbr',
+])
+
+
 class _SafeText:
     def __init__(self, text):
         self.text = text
@@ -52,6 +71,9 @@ def _element(doc, content):
         _set_attributes(el, attrs)
     else:
         children = rest[0:]
+
+    if tag not in _void_elements and not children:
+        children = ['']
 
     return el, children
 

@@ -56,3 +56,7 @@ class HtmlTestCase(TestCase):
     def test_id_and_classes(self):
         self.t(['p#i.c1.c2', 'hi'],
                '<p class="c1 c2" id="i">hi</p>')
+
+    def test_non_void_element_end_tag(self):
+        self.t(['script', {'src': 'main.js'}],
+               '<script src="main.js"></script>')
