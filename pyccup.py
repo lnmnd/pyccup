@@ -1,7 +1,7 @@
 import xml.dom.minidom as minidom
 
 
-_void_elements = set([
+_void_elements = {
     'area',
     'base',
     'br',
@@ -17,7 +17,7 @@ _void_elements = set([
     'source',
     'track',
     'wbr',
-])
+}
 
 
 class _SafeText:
