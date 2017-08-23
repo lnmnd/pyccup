@@ -103,8 +103,8 @@ def _node(content):
     children = [(container, content)]
     while children:
         new_children = []
-        for parent, content in children:
-            node, cs = _node_fun(content, doc)
+        for parent, child_content in children:
+            node, cs = _node_fun(child_content, doc)
             parent.appendChild(node)
             new_children.extend([(node, child) for child in cs])
         children = new_children
