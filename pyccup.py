@@ -66,7 +66,7 @@ def _element(doc, content):
     el = doc.createElement(tag)
     _set_attributes(el, attrs)
 
-    if len(rest) > 0 and isinstance(rest[0], dict):
+    if rest and isinstance(rest[0], dict):
         attrs, *children = rest
         _set_attributes(el, attrs)
     else:
