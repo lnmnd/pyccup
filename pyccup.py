@@ -82,6 +82,7 @@ _node_funs = [
     [str,       _text_node],
     [_SafeText, _safe_text],
     [list,      _element],
+    [tuple,     _element],
 ]
 
 

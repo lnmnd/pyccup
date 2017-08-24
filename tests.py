@@ -60,3 +60,7 @@ class HtmlTestCase(TestCase):
     def test_non_void_element_end_tag(self):
         self.t(['script', {'src': 'main.js'}],
                '<script src="main.js"></script>')
+
+    def test_tuple_element(self):
+        self.t(('br',),
+               '<br/>')

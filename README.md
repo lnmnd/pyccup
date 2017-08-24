@@ -45,10 +45,12 @@ But not if they are safe strings.
 '<strong>hi</strong>'
 ```
 
-Lists represent HTML elements. They need at least one item. The first item is always the tag.
+Lists and tuples represent HTML elements. They need at least one item. The first item is always the tag.
 
 ```python
 >>> html(['br'])
+'<br/>'
+>>> html(('br',))
 '<br/>'
 ```
 
