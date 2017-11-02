@@ -10,7 +10,7 @@ Pyccup is a library for representing HTML in Python. It is a Python port of [Hic
 Requires Python 3.3-3.6.
 
 ```sh
-$ pip install git+https://github.com/lnmnd/pyccup@0.1.0
+$ pip install git+https://github.com/lnmnd/pyccup@0.2.0
 ```
 
 ## Usage
